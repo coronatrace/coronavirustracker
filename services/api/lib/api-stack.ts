@@ -13,7 +13,12 @@ import {
   CfnGraphQLApi
 } from "@aws-cdk/aws-appsync";
 import { join } from "path";
-import { Table, BillingMode, AttributeType } from "@aws-cdk/aws-dynamodb";
+import {
+  Table,
+  BillingMode,
+  AttributeType,
+  StreamViewType
+} from "@aws-cdk/aws-dynamodb";
 import {
   Role,
   FederatedPrincipal,
@@ -21,6 +26,7 @@ import {
   Effect
 } from "@aws-cdk/aws-iam";
 import { readFileSync } from "fs";
+import { NewInfectionsRecordedFunc } from "./newInfectionFunction";
 
 export class ApiStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -118,7 +124,8 @@ export class ApiStack extends Stack {
       partitionKey: {
         name: "id",
         type: AttributeType.STRING
-      }
+      },
+      stream: StreamViewType.NEW_IMAGE
     });
 
     /**
@@ -192,6 +199,11 @@ export class ApiStack extends Stack {
         deleteInfectionResolverVtl
       ),
       responseMappingTemplate: MappingTemplate.dynamoDbResultItem()
+    });
+
+    new NewInfectionsRecordedFunc(this, "newInfectionRecordedFunction", {
+      contactsTable: contactTable,
+      infectionTable: infectionTable
     });
 
     /**
