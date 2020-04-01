@@ -39,5 +39,5 @@
     <!-- Notifications -->
     <string name="foreground_service_title">Coronavirus Tracker</string>
     <string name="foreground_service_description">Keeping you and others safe!</string>
-
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>
