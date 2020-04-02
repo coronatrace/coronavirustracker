@@ -108,6 +108,7 @@ export class ApiStack extends Stack {
      */
 
     const contactTable = new Table(this, "contactTable", {
+      tableName: "contacts",
       billingMode: BillingMode.PAY_PER_REQUEST,
       partitionKey: {
         name: "userId",
@@ -120,6 +121,7 @@ export class ApiStack extends Stack {
     });
 
     const infectionTable = new Table(this, "infectionTable", {
+      tableName: "infections",
       billingMode: BillingMode.PAY_PER_REQUEST,
       partitionKey: {
         name: "id",
