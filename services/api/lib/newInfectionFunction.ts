@@ -23,7 +23,7 @@ export class NewInfectionsRecordedFunc extends Function {
   ) {
     const lambdaProps: FunctionProps = {
       runtime: Runtime.NODEJS_12_X,
-      code: Code.fromAsset("./lambdas"),
+      code: Code.fromAsset("./../../backend/dist"),
       handler: "index.newInfectionRecorded",
       environment: {
         DYNAMO_DB_INFECTIONS_TABLE_NAME: props.infectionTable.tableName,
