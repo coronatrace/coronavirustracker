@@ -1,0 +1,17 @@
+{
+    "version": "2017-02-28",
+    "operation": "UpdateItem",
+    "key": {
+        "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        "userId": $util.dynamodb.toDynamoDBJson($ctx.identity.cognitoIdentityId)
+    },
+    "update": {
+        "expression": "SET #deletedTimestamp = :deletedTimestamp",
+        "expressionNames" : {
+            "#deletedTimestamp" : "deletedTimestamp"
+        },
+        "expressionValues" : {
+            ":deletedTimestamp" : $util.dynamodb.toDynamoDBJson($util.time.nowEpochSeconds())
+        }
+    }
+}

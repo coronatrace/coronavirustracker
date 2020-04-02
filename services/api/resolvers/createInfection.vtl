@@ -1,0 +1,16 @@
+{
+    "version" : "2018-05-29",
+    "operation" : "PutItem",
+    "key": {
+        "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        "userId": $util.dynamodb.toDynamoDBJson($ctx.identity.cognitoIdentityId)
+    },
+    "attributeValues" : $util.dynamodb.toMapValuesJson({
+        "infectedTimestamp": $ctx.args.input.infectedTimestamp,
+        "detectionSource": $ctx.args.input.detectionSource,
+        "createdTimestamp": $util.time.nowEpochSeconds()
+    }),
+    "condition": {
+        "expression" : "attribute_not_exists(id) AND attribute_not_exists(userId)"
+    }
+}

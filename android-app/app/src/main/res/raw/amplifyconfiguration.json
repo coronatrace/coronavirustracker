@@ -1,14 +1,14 @@
 {
-  "api": {
-    "plugins": {
-      "awsAPIPlugin": {
-        "amplifyDatasource": {
-          "endpointType": "GraphQL",
-          "endpoint": "https://ujiyyo57unfalbl2apg7kjoj3e.appsync-api.eu-west-1.amazonaws.com/graphql",
-          "region": "eu-west-1",
-          "authorizationType": "AWS_IAM"
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "api": {
+                    "endpointType": "GraphQL",
+                    "endpoint": "https://ujiyyo57unfalbl2apg7kjoj3e.appsync-api.eu-west-1.amazonaws.com/graphql",
+                    "region": "eu-west-1",
+                    "authorizationType": "AWS_IAM"
+                }
+            }
         }
-      }
     }
-  }
 }

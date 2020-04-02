@@ -1,0 +1,34 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateInfection {
+  onCreateInfection {
+    id
+    infectedTimestamp
+    userId
+    fromInfectionId
+    detectionSource
+    createdTimestamp
+    deletedTimestamp
+  }
+}
+subscription OnUpdateInfection {
+  onUpdateInfection {
+    id
+    infectedTimestamp
+    userId
+    fromInfectionId
+    detectionSource
+    createdTimestamp
+    deletedTimestamp
+  }
+}
+subscription OnDeleteInfection {
+  onDeleteInfection {
+    id
+    infectedTimestamp
+    userId
+    fromInfectionId
+    detectionSource
+    createdTimestamp
+    deletedTimestamp
+  }
+}

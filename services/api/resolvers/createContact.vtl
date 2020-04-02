@@ -1,0 +1,21 @@
+{
+  "version" : "2018-05-29",
+  "operation" : "PutItem",
+  "key": {
+    ## TODO - inform user if they have submitted an incorrect userId (even though its not used)
+    "userId": $util.dynamodb.toDynamoDBJson($ctx.identity.cognitoIdentityId),
+    #set( $contactUserId = $ctx.args.input.contactUserId )
+    #set( $contactTimestamp = $ctx.args.input.contactTimestamp )
+    "contactTimestampContactUserId": $util.dynamodb.toDynamoDBJson("$contactTimestamp$contactUserId")
+  },
+  ## Set the expiration timestamp for dynamodb TTL (so that records are)
+  ## not kept form more than 5 days
+  #set ($fiveDays = (24*60*60*5))
+  #set ($expirationTimestamp = ($ctx.args.input.contactTimestamp + $fiveDays))
+  "attributeValues" : $util.dynamodb.toMapValuesJson({
+    "contactUserId": $ctx.args.input.contactUserId,
+    "contactTimestamp": $ctx.args.input.contactTimestamp,
+    "createdTimestamp": $util.time.nowEpochSeconds(),
+    "expirationTimestamp": $expirationTimestamp
+  })
+}
