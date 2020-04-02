@@ -15,7 +15,9 @@ buildscript {
     }
 }
 
-apply plugin: 'com.amplifyframework.amplifytools'
+// Model gen doesn't work on appSync apis built outside of amplify
+// unless some extra files are setup and the schema uses @model directives etc
+// apply plugin: 'com.amplifyframework.amplifytools'
 
 allprojects {
     repositories {
