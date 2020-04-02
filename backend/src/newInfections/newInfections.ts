@@ -148,7 +148,7 @@ function addInfectionsToDB(
         Item: {
           id: { S: input.infectionId },
           userId: { S: contact.contactUserId.S },
-          infectedTimestamp: { S: input.infectedTimestamp.toString() },
+          infectedTimestamp: { N: input.infectedTimestamp.toString() },
           fromInfectionId: { S: contact.userId.S },
           detectionSource: { S: DetectionSource.contact },
           createdTimestamp: { N: Date.now().toString() }
