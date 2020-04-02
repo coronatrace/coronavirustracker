@@ -1,7 +1,6 @@
 import { Callback, Context, DynamoDBStreamEvent } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 import { ItemList, PutItemInput, QueryInput } from "aws-sdk/clients/dynamodb";
-import { v4 } from "uuid";
 import {
   DetectionSource,
   DynamoDBStreamImage,
@@ -9,12 +8,19 @@ import {
   AddInfectionToDBInput
 } from "../interfaces/interface";
 
+/**
+ * Lambda function to process dynamoDb table stream for new infections
+ *
+ * @param event DynamoDb Stream Event with Changes to A Table Item
+ * @param context
+ * @param callback
+ */
 export function newInfectionRecorded(
   event: DynamoDBStreamEvent,
   context: Context,
   callback: Callback
 ) {
-  const [contactsTableName, infectionsTableName] = getDynamoDbTablesNames(
+  const { contactsTableName, infectionsTableName } = getDynamoDbTablesNames(
     process.env
   );
 
@@ -33,22 +39,24 @@ export function newInfectionRecorded(
         contactsTableName, // should alway be set
         client
       );
-
       // todo: paginate at this point in future as the data grows.
       if (!dbContactsResponse.Items) {
         throw Error("Could not find any new contacts");
       }
-      const contacts = filterContactsDuplicate(dbContactsResponse.Items);
+      const contacts = filterContactsForDuplicate(dbContactsResponse.Items);
       const addInfectionsToDBInput = {
         contacts: contacts,
         infectionsTable: infectionsTableName,
-        infectedTimestamp: newInfectionRecord.infectedTimestamp.toUTCString(),
-        infectionId: v4()
+        infectedTimestamp: newInfectionRecord.infectedTimestamp.valueOf(),
+        infectionId: uuidv4()
       };
       await addInfectionsToDB(addInfectionsToDBInput, client);
     }
   });
-  callback(null, `Successfully processed ${event.Records.length} records.`);
+  callback(
+    null,
+    `Successfully processed ${event.Records.length} new infections.`
+  );
 }
 
 /**
@@ -60,21 +68,18 @@ function parseInfectionRecord(
 ): InfectionInterface {
   if (
     !newImage.id.S ||
-    !newImage.infectedTimestamp.S ||
+    !newImage.infectedTimestamp.N ||
     !newImage.userId.S ||
     !newImage.detectionSource.S ||
-    !newImage.createdTimestamp.S
+    !newImage.createdTimestamp.N
   ) {
     throw Error("Invalid Request. Required Field are not present");
   }
 
   return {
     id: newImage.id.S,
-    infectedTimestamp: new Date(Date.parse(newImage.infectedTimestamp.S)),
-    createdTimestamp: new Date(Date.parse(newImage.createdTimestamp.S)),
-    deletedTimestamp: newImage.deletedTimestamp.S
-      ? new Date(Date.parse(newImage.deletedTimestamp.S))
-      : undefined,
+    infectedTimestamp: Number(newImage.infectedTimestamp.N),
+    createdTimestamp: Number(newImage.createdTimestamp.N),
     detectionSource: <DetectionSource>newImage.detectionSource.S,
     userId: newImage.userId.S
   };
@@ -88,16 +93,16 @@ async function getContactsOfAnInfected(
   tableName: string,
   client: DynamoDB = new DynamoDB()
 ) {
+  console.log({ userId, tableName });
   try {
     const dynamoDbParams: QueryInput = {
       TableName: tableName,
-      KeyConditionExpression: "contactUserId = :userId",
+      KeyConditionExpression: "userId = :userId",
       ExpressionAttributeValues: {
-        userId: { S: userId }
+        ":userId": { S: userId }
       }
     };
     const dbResponse = await client.query(dynamoDbParams).promise();
-    console.log({ contacts: dbResponse });
     if (!dbResponse) {
       throw Error("Could not find any new contacts");
     }
@@ -111,7 +116,7 @@ async function getContactsOfAnInfected(
 /**
  * Remove multiple entries of a contact having come close to an infected person.
  */
-function filterContactsDuplicate(dynamoDbContacts: ItemList) {
+function filterContactsForDuplicate(dynamoDbContacts: ItemList) {
   const seen = new Set();
   const filteredContacts = dynamoDbContacts.filter(contact => {
     if (contact.contactUserId.S) {
@@ -143,10 +148,10 @@ function addInfectionsToDB(
         Item: {
           id: { S: input.infectionId },
           userId: { S: contact.contactUserId.S },
-          infectedTimestamp: { S: input.infectedTimestamp },
+          infectedTimestamp: { S: input.infectedTimestamp.toString() },
           fromInfectionId: { S: contact.userId.S },
           detectionSource: { S: DetectionSource.contact },
-          createdTimestamp: { S: new Date(Date.now()).toISOString() }
+          createdTimestamp: { N: Date.now().toString() }
         }
       };
       return client.putItem(item).promise();
@@ -169,5 +174,17 @@ function getDynamoDbTablesNames(environment = process.env) {
     );
   }
 
-  return [infectionsTableName, contactsTableName];
+  return { infectionsTableName, contactsTableName };
+}
+
+function uuidv4() {
+  var dt = new Date().getTime();
+  var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+    c
+  ) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
 }

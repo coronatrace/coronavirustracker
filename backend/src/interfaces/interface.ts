@@ -1,12 +1,4 @@
-import {
-  QueryInput,
-  BatchWriteItemInput,
-  AttributeValue,
-  ItemList,
-  WriteRequest,
-  PutItemInput
-} from "aws-sdk/clients/dynamodb";
-import DynamoDB = require("aws-sdk/clients/dynamodb");
+import { AttributeValue, ItemList } from "aws-sdk/clients/dynamodb";
 
 export interface DynamoDBStreamImage {
   [key: string]: AttributeValue;
@@ -20,21 +12,21 @@ export enum DetectionSource {
 
 export interface InfectionInterface {
   id: string;
-  infectedTimestamp: Date;
+  infectedTimestamp: Number;
   userId: string;
   fromInfectionId?: string;
   detectionSource: DetectionSource;
-  createdTimestamp: Date;
-  deletedTimestamp?: Date;
+  createdTimestamp: Number;
+  deletedTimestamp?: Number;
 }
 
 export interface Contact {
   userId: string;
   id: string;
   contactUserId: string;
-  contactTimestamp: Date;
-  createdTimestamp: Date;
-  expirationTimestamp: Date;
+  contactTimestamp: Number;
+  createdTimestamp: Number;
+  expirationTimestamp: Number;
 }
 
 export interface contactsResponse {
@@ -44,6 +36,6 @@ export interface contactsResponse {
 export interface AddInfectionToDBInput {
   contacts: ItemList;
   infectionsTable: string;
-  infectedTimestamp: string;
+  infectedTimestamp: number;
   infectionId: string;
 }

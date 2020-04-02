@@ -1,1 +1,1 @@
-export { newInfectionRecorded } from "./newInfections/newInfections";
+export * from "./newInfections/newInfections";
