@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "es2017",
     "module": "commonjs",
-    "lib": ["es2018"],
-    "declaration": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -12,12 +10,16 @@
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": false,
-    "inlineSourceMap": true,
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "typeRoots": ["./node_modules/@types"],
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["node"],
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "skipLibCheck": true
   },
   "exclude": ["dist"],
   "include": ["src"]
