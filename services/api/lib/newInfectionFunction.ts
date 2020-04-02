@@ -25,6 +25,10 @@ export class NewInfectionsRecordedFunc extends Function {
       runtime: Runtime.NODEJS_12_X,
       code: Code.fromAsset("./lambdas"),
       handler: "index.newInfectionRecorded",
+      environment: {
+        DYNAMO_DB_INFECTIONS_TABLE_NAME: props.infectionTable.tableName,
+        DYNAMO_DB_CONTACTS_TABLE_NAME: props.contactsTable.tableName
+      },
       initialPolicy: [
         new PolicyStatement({
           effect: Effect.ALLOW,
