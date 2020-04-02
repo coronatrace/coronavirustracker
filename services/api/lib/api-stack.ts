@@ -27,7 +27,7 @@ import {
 } from "@aws-cdk/aws-iam";
 import { readFileSync } from "fs";
 import { NewInfectionsRecordedFunc } from "./newInfectionFunction";
-
+import { StringParameter } from "@aws-cdk/aws-ssm";
 export class ApiStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -204,6 +204,19 @@ export class ApiStack extends Stack {
     new NewInfectionsRecordedFunc(this, "newInfectionRecordedFunction", {
       contactsTable: contactTable,
       infectionTable: infectionTable
+    });
+
+    // Add the names of the tables to SSM Param Store
+    new StringParameter(this, "DynamoDBInfectionsTableName", {
+      stringValue: infectionTable.tableName,
+      description: "The name of the infection table on DynamoDB",
+      parameterName: "/dynamoDb/tables/infections"
+    });
+
+    new StringParameter(this, "DynamoDBContactsTableName", {
+      stringValue: infectionTable.tableName,
+      description: "The name of the contacts table on DynamoDB",
+      parameterName: "/dynamoDb/tables/contacts"
     });
 
     /**
