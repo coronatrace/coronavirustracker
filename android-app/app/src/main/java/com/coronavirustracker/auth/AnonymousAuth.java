@@ -1,7 +1,6 @@
-package com.coronotrace.auth;
+package com.coronavirustracker.auth;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;

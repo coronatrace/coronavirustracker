@@ -1,4 +1,4 @@
-package com.coronotrace.coronavirustracker;
+package com.coronavirustracker.app;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,14 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.amplifyframework.api.graphql.MutationType;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Contact;
-import com.coronotrace.auth.AnonymousAuth;
+import com.coronavirustracker.auth.AnonymousAuth;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;

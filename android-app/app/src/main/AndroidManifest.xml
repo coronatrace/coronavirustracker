@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coronotrace.coronavirustracker"
+    package="com.coronavirustracker.app"
     android:versionCode="1"
     android:versionName="0.0.1">
 
@@ -25,7 +25,7 @@
 
         <!-- Firebase notifications -->
         <service
-            android:name=".NotificationService"
+            android:name="com.coronavirustracker.app.NotificationService"
             android:exported="false"><intent-filter>
             <action android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter></service>
@@ -43,11 +43,11 @@
 
 
         <service
-            android:name=".LogContact"
+            android:name="com.coronavirustracker.app.LogContact"
             android:exported="false" /> <!-- Service for subscriptions -->
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.coronavirustracker.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,8 +55,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CheckSymptoms"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.coronavirustracker.app.CheckSymptoms"
+            android:parentActivityName="com.coronavirustracker.app.MainActivity" />
 
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"

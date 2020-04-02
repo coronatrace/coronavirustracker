@@ -1,4 +1,4 @@
-package com.coronotrace.coronavirustracker;
+package com.coronavirustracker.app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.core.Amplify;
-import com.coronotrace.auth.AnonymousAuth;
+import com.coronavirustracker.auth.AnonymousAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
