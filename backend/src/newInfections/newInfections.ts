@@ -1,10 +1,12 @@
 import { Callback, Context, DynamoDBStreamEvent } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 import { ItemList, PutItemInput, QueryInput } from "aws-sdk/clients/dynamodb";
+import { v4 } from "uuid";
 import {
   DetectionSource,
   DynamoDBStreamImage,
-  InfectionInterface
+  InfectionInterface,
+  AddInfectionToDBInput
 } from "../interfaces/interface";
 
 export function newInfectionRecorded(
@@ -37,12 +39,13 @@ export function newInfectionRecorded(
         throw Error("Could not find any new contacts");
       }
       const contacts = filterContactsDuplicate(dbContactsResponse.Items);
-      await addNewInfectionsFromContact(
-        contacts,
-        infectionsTableName, // should always be set
-        newInfectionRecord.infectedTimestamp.toUTCString(),
-        client
-      );
+      const addInfectionsToDBInput = {
+        contacts: contacts,
+        infectionsTable: infectionsTableName,
+        infectedTimestamp: newInfectionRecord.infectedTimestamp.toUTCString(),
+        infectionId: v4()
+      };
+      await addInfectionsToDB(addInfectionsToDBInput, client);
     }
   });
   callback(null, `Successfully processed ${event.Records.length} records.`);
@@ -129,20 +132,18 @@ function filterContactsDuplicate(dynamoDbContacts: ItemList) {
  * @param infectedTimestamp when the infection was registered
  * @param client DynamoDB Client
  */
-function addNewInfectionsFromContact(
-  contacts: ItemList,
-  infectionsTable: string,
-  infectedTimestamp: string,
+function addInfectionsToDB(
+  input: AddInfectionToDBInput,
   client: DynamoDB = new DynamoDB()
 ) {
   try {
-    const data = contacts.map(contact => {
+    const data = input.contacts.map(contact => {
       const item: PutItemInput = {
-        TableName: infectionsTable,
+        TableName: input.infectionsTable,
         Item: {
-          id: { S: "" },
+          id: { S: input.infectionId },
           userId: { S: contact.contactUserId.S },
-          infectedTimestamp: { S: infectedTimestamp },
+          infectedTimestamp: { S: input.infectedTimestamp },
           fromInfectionId: { S: contact.userId.S },
           detectionSource: { S: DetectionSource.contact },
           createdTimestamp: { S: new Date(Date.now()).toISOString() }

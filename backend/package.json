@@ -11,7 +11,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "aws-sdk": "^2.651.0"
+    "@types/uuid": "^7.0.2",
+    "aws-sdk": "^2.651.0",
+    "uuid": "^7.0.3"
   },
   "scripts": {
     "build": "tsc",

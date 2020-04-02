@@ -6,6 +6,7 @@ import {
   WriteRequest,
   PutItemInput
 } from "aws-sdk/clients/dynamodb";
+import DynamoDB = require("aws-sdk/clients/dynamodb");
 
 export interface DynamoDBStreamImage {
   [key: string]: AttributeValue;
@@ -38,4 +39,11 @@ export interface Contact {
 
 export interface contactsResponse {
   [key: string]: Contact;
+}
+
+export interface AddInfectionToDBInput {
+  contacts: ItemList;
+  infectionsTable: string;
+  infectedTimestamp: string;
+  infectionId: string;
 }
