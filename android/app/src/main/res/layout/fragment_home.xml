@@ -89,21 +89,21 @@
         android:paddingRight="@dimen/default_margin">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/checkSymptoms"
-            app:icon="@drawable/ic_help_white_16dp"
+            android:id="@+id/navigateCheckSymptoms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginLeft="@dimen/default_margin"
-            android:text="@string/check_symptoms" />
+            android:text="@string/check_symptoms"
+            app:icon="@drawable/ic_help_white_16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reportTestResults"
             style="?attr/materialButtonOutlinedStyle"
-            app:icon="@drawable/ic_add_primary_16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="@string/report_test_results" />
+            android:text="@string/report_test_results"
+            app:icon="@drawable/ic_add_primary_16dp" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

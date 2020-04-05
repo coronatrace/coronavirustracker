@@ -36,4 +36,17 @@
     <!-- Bottom Bar -->
     <string name="check_symptoms">Report Symptoms</string>
     <string name="report_test_results">Test Results</string>
+
+    <!-- Quiz Symptoms -->
+    <string name="symptoms_quiz_temperature_title">Do you have a high temperature?</string>
+    <string name="symptoms_quiz_temperature_body">This means you feel hot to touch
+        on your chest or back (you do not need to measure your temperature).</string>
+    <string name="symptoms_quiz_cough_title">DO you have a new, continuous cough?</string>
+    <string name="symptoms_quiz_cough_body">This means coughing a lot for more
+        than an hour, or 3 or more coughing episodes in 24 hours (if you usually have a cough, it
+        may be worse than usual).</string>
+
+    <!-- Generics -->
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>

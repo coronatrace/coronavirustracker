@@ -1,11 +1,7 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <item name="toolbarStyle">@style/CustomToolBarStyle</item>
-    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-    <style name="CustomToolBarStyle" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="titleTextColor">@color/colorOnPrimary</item>
     </style>
 
 </resources>
