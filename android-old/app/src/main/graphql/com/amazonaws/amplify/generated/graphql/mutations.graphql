@@ -1,0 +1,41 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateContact(
+  $input: CreateContactInput!
+  $condition: ModelContactConditionInput
+) {
+  createContact(input: $input, condition: $condition) {
+    userId
+    contactUserId
+    contactTimestamp
+    createdTimestamp
+    expirationTimestamp
+  }
+}
+mutation CreateInfection(
+  $input: CreateInfectionInput!
+  $condition: ModelInfectionConditionInput
+) {
+  createInfection(input: $input, condition: $condition) {
+    id
+    infectedTimestamp
+    userId
+    fromInfectionId
+    detectionSource
+    createdTimestamp
+    deletedTimestamp
+  }
+}
+mutation DeleteInfection(
+  $input: DeleteInfectionInput!
+  $condition: ModelInfectionConditionInput
+) {
+  deleteInfection(input: $input, condition: $condition) {
+    id
+    infectedTimestamp
+    userId
+    fromInfectionId
+    detectionSource
+    createdTimestamp
+    deletedTimestamp
+  }
+}

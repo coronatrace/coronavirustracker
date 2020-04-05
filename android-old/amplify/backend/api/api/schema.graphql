@@ -1,0 +1,66 @@
+type Contact @model(
+    queries: null
+     mutations: { create: "createContact", delete: null, update: null }
+     subscriptions: null
+   )
+   @key(fields: ["userId"]) {
+  userId: ID! # TODO - make not required whene ctx.identity is setup in resolver
+  # Sort key is the combination of contactUserId and contactTimestamp
+  contactUserId: ID!
+  contactTimestamp: AWSTimestamp!
+  createdTimestamp: AWSTimestamp
+  expirationTimestamp: AWSTimestamp
+}
+
+type Infection @model(
+     queries: null
+     mutations: {
+       create: "createInfection"
+       delete: "deleteInfection"
+       update: null
+     }
+     subscriptions: null
+   )
+   @key(fields: ["id", "infectedTimestamp"])
+   @key(
+     name: "GetInfectionsByUser"
+     fields: ["userId"]
+     queryField: "getInfectionsByUser"
+   ) {
+  id: ID!
+  infectedTimestamp: AWSTimestamp!
+  userId: ID # TODO - make not required whene ctx.identity is setup in resolver
+  fromInfectionId: ID
+  detectionSource: DetectionSource!
+  createdTimestamp: AWSTimestamp
+  deletedTimestamp: AWSTimestamp # Tombstone
+}
+
+input CreateInfectionInput {
+  userId: ID!
+  infectedTimestamp: AWSTimestamp!
+  detectionSource: DetectionSourceCreate!
+}
+
+input CreateContactInput {
+  userId: ID!
+  contactUserId: ID!
+  contactTimestamp: AWSTimestamp!
+}
+
+enum DetectionSource {
+  test
+  symptoms
+  contact
+}
+
+enum DetectionSourceCreate {
+  test
+  symptoms
+}
+
+# Required to fix amplify bug
+enum ModelSortDirection {
+  ASC
+  DESC
+}

@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Covid Tracker</string>
+
+    <!-- Status -->
+    <string name="status_no_contact_title">No Coronavirus Contact Detected</string>
+    <string name="status_no_contact_description">We\'ll let you know if you\'ve come into contact
+        with anyone, who has reported symptoms on their app.</string>
+    <string name="status_symptoms_title">Please Self-Isolate</string>
+    <string name="status_symptoms_body">You have reported symptoms within the past 14 days. Please
+    self-isolate until the 14 days is over, to help save lives.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="enable_tracking">Enable contact tracking</string>
+    <string name="enable_tracking_description">The app will remember everyone who you\'ve
+        come into contact with (so long as they have the app). You can safely use other apps whilst
+        this is running.
+        \n
+        \nYou may hear an occasional sound in the background - this is the app using ultrasound to
+        detect nearby phones.</string>
+
+    <!-- How it works -->
+    <string name="how_it_works_title">How it Works</string>
+    <string name="how_it_works_description">Covid Tracker keeps a list of everyone you\’ve come into
+        contact with (less than 2m away), where they also have the app. Then, if one of these people
+        reports symptoms, you’ll also be alerted to self-quarantine so that we can slow the spread
+        together.
+        \n
+        \nEverything is anonymous, and no personal data (like your name) or GPS location data is ever
+        recorded. Users will never be told where, when or by whom they have been infected.
+        \n
+        \nTechnically speaking, the app uses Bluetooth, Wifi and near-ultrasound audio for precise
+        proximity detection. You may hear a very quiet sound every minute for 10 seconds - this is
+        the near-ultrasound audio and we\'re working to make this even quieter.</string>
+
+    <!-- Bottom Bar -->
+    <string name="check_symptoms">Report Symptoms</string>
+    <string name="report_test_results">Test Results</string>
+</resources>

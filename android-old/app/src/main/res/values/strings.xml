@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Coronavirus Tracker</string>
+    <string name="check_symptoms">Check Symptoms</string>
+    <string name="made_mistake">Cancel reported coronavirus</string>
+    <string name="settings">Settings</string>
+    <string name="enable_contact_tracking">Enable contract tracking</string>
+    <string name="enable_contact_tracking_description">The app will remember everyone who you\'ve
+        come into contact with (so long as they have the app). You can safely use other apps whilst
+        this is running.</string>
+
+    <!-- Status -->
+    <string name="status_no_contact_title">No Coronavirus Contact Detected</string>
+    <string name="status_no_contact_description">We\'ll let you know if you\'ve come into contact
+        with anyone, who has reported symptoms on their app.</string>
+    <string name="status_symptoms_title">Please Self-Isolate</string>
+    <string name="status_symptoms_body">You have reported symptoms within the past 14 days. Please
+    self-isolate until the 14 days is over, to help save lives.</string>
+
+
+    <!-- Symptoms -->
+    <string name="check_symptoms_title">Have you experienced any of these symptoms?</string>
+    <string name="check_symptoms_temperature">A high temperature – this means you feel hot to touch
+        on your chest or back (you do not need to measure your temperature).</string>
+    <string name="check_symptoms_cough">A new, continuous cough – this means coughing a lot for more
+        than an hour, or 3 or more coughing episodes in 24 hours (if you usually have a cough, it
+        may be worse than usual).</string>
+    <string name="check_symptoms_submit">Submit</string>
+
+    <string name="check_symptoms_negative_title">You aren\'t displaying any symptoms</string>
+    <string name="check_symptoms_negative_body">You may still have Coronavirus - many people won\'t
+        show symptoms for the first 5 days.</string>
+
+    <string name="check_symptoms_positive_title">You are displaying symptoms of Coronavirus</string>
+    <string name="check_symptoms_positive_body">When you click \'ok\', everyone who you have come into
+        contact with over the past 5 days, will be told to self-isolate.
+        \n\nDon\'t worry - they won\'t be told who you are, or when they came into contact with you.
+        \n\nYou will also need to self-isolate yourself for 14 days.</string>
+
+    <!-- Notifications -->
+    <string name="foreground_service_title">Coronavirus Tracker</string>
+    <string name="foreground_service_description">Keeping you and others safe!</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+</resources>
