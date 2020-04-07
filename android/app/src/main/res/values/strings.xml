@@ -34,19 +34,33 @@
         the near-ultrasound audio and we\'re working to make this even quieter.</string>
 
     <!-- Bottom Bar -->
-    <string name="check_symptoms">Report Symptoms</string>
+    <string name="check_symptoms">Check Symptoms</string>
     <string name="report_test_results">Test Results</string>
 
-    <!-- Quiz Symptoms -->
+    <!-- Symptoms Quiz -->
     <string name="symptoms_quiz_temperature_title">Do you have a high temperature?</string>
     <string name="symptoms_quiz_temperature_body">This means you feel hot to touch
         on your chest or back (you do not need to measure your temperature).</string>
-    <string name="symptoms_quiz_cough_title">DO you have a new, continuous cough?</string>
+    <string name="symptoms_quiz_cough_title">Do you have a new, continuous cough?</string>
     <string name="symptoms_quiz_cough_body">This means coughing a lot for more
         than an hour, or 3 or more coughing episodes in 24 hours (if you usually have a cough, it
         may be worse than usual).</string>
 
+    <string name="symptoms_quiz_negative_title">You are not showing the common symptoms of
+        Coronavirus</string>
+    <string name="symptoms_quiz_negative_body">You may still be infected.\n\n
+    Many people won\'t show symptoms for around 5 days, and others won\'t show symptoms at all.
+    \n\n
+    If you think you may have been infected, we still recommend that you self-quarantine to
+    be safe.</string>
+    <string name="symptoms_quiz_positive_title">You are showing symptoms of Coronavirus</string>
+    <string name="symptoms_quiz_positive_body">Please self-quarantine immediately.</string>
+
     <!-- Generics -->
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="ok">ok</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

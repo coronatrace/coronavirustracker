@@ -1,0 +1,21 @@
+package com.coronatrace.covidtracker.data.source.local
+
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.coronatrace.covidtracker.data.Infection
+
+@Dao
+interface InfectionDao {
+
+    @Query("SELECT * from infection ORDER BY localId DESC LIMIT 1")
+    fun getLatestInfection(): LiveData<Infection>
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insert(infection: Infection)
+
+    @Update
+    suspend fun update(infection: Infection)
+
+}
+
+

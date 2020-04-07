@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.coronatrace.covidtracker.HomeFragment"
+        android:name="com.coronatrace.covidtracker.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/symptomsQuizFragment"
-        android:name="com.coronatrace.covidtracker.SymptomsQuizFragment"
+        android:name="com.coronatrace.covidtracker.symptomsquiz.SymptomsQuizFragment"
         android:label="fragment_symptoms_quiz"
-        tools:layout="@layout/fragment_symptoms_quiz" />
+        tools:layout="@layout/fragment_symptoms_quiz" >
+        <action
+            android:id="@+id/action_symptomsQuizFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>
