@@ -1,12 +1,12 @@
 package com.coronatrace.covidtracker.home
 
 import android.app.Application
-import android.database.Observable
-import android.opengl.Visibility
+import android.content.Context.MODE_PRIVATE
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.coronatrace.covidtracker.R
 import com.coronatrace.covidtracker.data.Infection
@@ -24,15 +24,26 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var resetButtonVisibility = ObservableField<Int>()
     val cardBackgroundColor = ObservableField<Int>()
     val cardTextColor = ObservableField<Int>()
+    val trackingEnabled = MutableLiveData<Boolean>(true)
+
+    private val trackingPreferences = application.getSharedPreferences(null, MODE_PRIVATE)
 
     init {
+        // Default to all-clear
         setStatusNoContact()
+
+        // Get trackingEnabled preferences
+        val trackingEnabledInt = trackingPreferences.getInt("trackingEnabled", 0)
+        trackingEnabled.value = trackingEnabledInt == 1
+
+        // Setup repository
         val infectionDao = AppRoomDatabase.getDatabase(application).infectionDao()
         repository =
             InfectionRepository(
                 infectionDao
             )
         latestInfection = repository.latestInfection
+
     }
 
     fun resetInfectionsFromSymptoms() = viewModelScope.launch {
@@ -54,5 +65,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cardBackgroundColor.set(R.color.lightGray)
         cardTextColor.set(R.color.onBackground)
     }
+
+    fun handleTrackingEnabledSwitch() {
+        val oppositeValue = trackingEnabled.value != true
+        trackingEnabled.value = oppositeValue
+
+        val trackingEnabledInt = if (oppositeValue) 1 else 0
+        trackingPreferences.edit().putInt("trackingEnabled", trackingEnabledInt ).apply()
+    }
+
 
 }

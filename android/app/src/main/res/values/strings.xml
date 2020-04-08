@@ -10,6 +10,10 @@
     self-isolate until the 14 days is over, to help save lives.</string>
     <string name="reset_symptoms">Reset symptoms</string>
 
+    <!-- Foreground service notification -->
+    <string name="foreground_notification_title">Covid Tracker is running</string>
+    <string name="foreground_notification_body">Logging everyone who you come into contact with.</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="enable_tracking">Enable contact tracking</string>
