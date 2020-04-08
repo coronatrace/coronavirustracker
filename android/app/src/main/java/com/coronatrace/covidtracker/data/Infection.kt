@@ -9,5 +9,6 @@ data class Infection(
     val remoteId: String?,
     val timestamp: Long, // Note for infection via contact this is the time of notification, not infection
     val source: String, // E.g. test, contact...
-    val infectedStatus: Boolean // True means infected, false is e.g. a test proving not infected
+    val infectedStatus: Boolean? = true, // True means infected, false is e.g. a test proving not infected
+    val cancelled: Boolean? = false
 )

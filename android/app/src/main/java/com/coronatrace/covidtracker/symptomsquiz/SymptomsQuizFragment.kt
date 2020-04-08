@@ -14,7 +14,6 @@ import com.coronatrace.covidtracker.databinding.SymptomsQuizFragBinding
 class SymptomsQuizFragment : Fragment() {
 
     private lateinit var viewDataBinding: SymptomsQuizFragBinding
-
     private val viewModel by viewModels<SymptomsQuizViewModel>()
 
     override fun onCreateView(

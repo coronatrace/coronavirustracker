@@ -11,7 +11,8 @@ class InfectionRepository(private val infectionDao: InfectionDao) {
         infectionDao.insert(infection)
     }
 
-    suspend fun updateInfection(infection: Infection) {
-        infectionDao.update(infection)
+    suspend fun resetInfectionsFromSymptoms() {
+        infectionDao.resetInfectionsFromSymptoms()
     }
+
 }

@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.coronatrace.covidtracker.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/home_frag" >
         <action
             android:id="@+id/action_homeFragment_to_symptomsQuizFragment"
             app:destination="@id/symptomsQuizFragment" />

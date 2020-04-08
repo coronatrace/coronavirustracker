@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.coronatrace.covidtracker.data.Infection
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [Infection::class], version = 1, exportSchema = false)
+@Database(entities = [Infection::class], version = 3, exportSchema = true)
 public abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun infectionDao(): InfectionDao
@@ -29,7 +29,9 @@ public abstract class AppRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppRoomDatabase::class.java,
                     "app_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration() // TODO remove
+                    .build()
                 INSTANCE = instance
                 return instance
             }

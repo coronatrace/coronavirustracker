@@ -1,13 +1,18 @@
 package com.coronatrace.covidtracker.symptomsquiz
 
 import android.app.Application
+import android.os.health.SystemHealthManager
+import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.coronatrace.covidtracker.R
+import com.coronatrace.covidtracker.data.Infection
 import com.coronatrace.covidtracker.data.source.InfectionRepository
 import com.coronatrace.covidtracker.data.source.local.AppRoomDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SymptomsQuizViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -70,7 +75,12 @@ class SymptomsQuizViewModel(application: Application) : AndroidViewModel(applica
 
     private fun setInfected() {
         // Store details (DB and remotely)
-        // TODO
+        val infectionTime = System.currentTimeMillis()
+        val infection = Infection(null,null, infectionTime, "symptoms")
+        GlobalScope.launch {
+            Log.d("Inserting infection", "$infection")
+            repository.insertInfection(infection)
+        }
 
         // Update view
         cardTitle.set(R.string.symptoms_quiz_positive_title)

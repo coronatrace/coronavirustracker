@@ -8,6 +8,7 @@
     <string name="status_symptoms_title">Please Self-Isolate</string>
     <string name="status_symptoms_body">You have reported symptoms within the past 14 days. Please
     self-isolate until the 14 days is over, to help save lives.</string>
+    <string name="reset_symptoms">Reset symptoms</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
