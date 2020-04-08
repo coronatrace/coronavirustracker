@@ -37,17 +37,9 @@ class HomeFragment : Fragment() {
             Log.d("Infection status", "$infection")
 
             if (infection != null && infection.timestamp > fourteenDaysAgo) {
-                // Card
-                var backgroundColor = ContextCompat.getColor(activity!!.applicationContext, R.color.error)
-                var textColor = ContextCompat.getColor(activity!!.applicationContext, R.color.onError)
-                binding.statusTitle.setText(R.string.status_symptoms_title)
-                binding.statusTitle.setTextColor(textColor)
-                binding.statusBody.setText(R.string.status_symptoms_body)
-                binding.statusBody.setTextColor(textColor)
-                binding.card.setBackgroundColor(backgroundColor)
-
-                // Cancel button
-                binding.resetInfectionsButton.visibility = View.VISIBLE
+                 viewModel.setStatusSymptoms()
+            } else {
+                viewModel.setStatusNoContact()
             }
         }
         viewModel.latestInfection.observe(this, infectionObserver)
