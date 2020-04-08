@@ -15,4 +15,8 @@ class InfectionRepository(private val infectionDao: InfectionDao) {
         infectionDao.resetInfectionsFromSymptoms()
     }
 
+    // TODO send message to backend
+
+    // TODO sync infections - get, compare, add existing and remove others
+
 }

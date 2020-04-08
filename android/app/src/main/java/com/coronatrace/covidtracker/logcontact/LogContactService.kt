@@ -77,6 +77,7 @@ class LogContactService : Service() {
     }
 
     override fun onDestroy() {
+        stopLoggingScheduler()
         stopLogging.run()
         super.onDestroy()
     }

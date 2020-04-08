@@ -8,7 +8,7 @@ import com.coronatrace.covidtracker.data.Infection
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(entities = [Infection::class], version = 3, exportSchema = true)
-public abstract class AppRoomDatabase : RoomDatabase() {
+abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun infectionDao(): InfectionDao
 
