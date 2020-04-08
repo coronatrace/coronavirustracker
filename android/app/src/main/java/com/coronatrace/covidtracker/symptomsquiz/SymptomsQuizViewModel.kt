@@ -1,26 +1,32 @@
 package com.coronatrace.covidtracker.symptomsquiz
 
 import android.app.Application
+import android.view.View
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.coronatrace.covidtracker.R
-import com.coronatrace.covidtracker.data.Infection
 import com.coronatrace.covidtracker.data.source.InfectionRepository
 import com.coronatrace.covidtracker.data.source.local.AppRoomDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class SymptomsQuizViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var questionNumber = 1;
-    private var questionsTotal = 2;
-    private val repository: InfectionRepository
+    var cardTitle = ObservableField<Int>()
+    var cardBody = ObservableField<Int>()
+    val cardBackgroundColor = ObservableField<Int>(R.color.lightGray)
+    val cardTextColor = ObservableField<Int>(R.color.onBackground)
+    val noButtonVisibility = ObservableField<Int>(View.VISIBLE)
+    val yesButtonText = ObservableField<Int>(R.string.yes)
+    val quizEndedState = MutableLiveData<Boolean>(false)
 
-    // Create a LiveData with a String
-    val question: MutableLiveData<QuizState> by lazy {
-        MutableLiveData<QuizState>()
-    }
+    private val questions: Array<Question> = arrayOf(
+        Question(R.string.symptoms_quiz_temperature_title, R.string.symptoms_quiz_temperature_body),
+        Question(R.string.symptoms_quiz_cough_title, R.string.symptoms_quiz_cough_body)
+    )
+    private var questionsAnswered = 0;
+    private var viewingResult = false;
+
+    private val repository: InfectionRepository
 
     init {
         setQuestion()
@@ -32,8 +38,8 @@ class SymptomsQuizViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun answerNo() {
-        if (questionNumber < questionsTotal) {
-            questionNumber++
+        if (questionsAnswered < questions.size - 1) {
+            questionsAnswered++
             setQuestion()
         } else {
             setNotInfected()
@@ -41,50 +47,46 @@ class SymptomsQuizViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun answerYes() {
-        setInfected()
+        if (!viewingResult) {
+            setInfected()
+        } else {
+            // Update the quizEndedState for an observer in the fragment (to navigate with)
+            quizEndedState.value = true;
+        }
     }
 
     private fun setQuestion() {
-        if (questionNumber == 1) {
-            question.value =
-                QuizState(
-                    R.string.symptoms_quiz_temperature_title,
-                    R.string.symptoms_quiz_temperature_body,
-                    null
-                )
-        } else {
-            question.value =
-                QuizState(
-                    R.string.symptoms_quiz_cough_title,
-                    R.string.symptoms_quiz_cough_body,
-                    null
-                )
-        }
-    }
-
-    private fun setInfected() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val timestamp = System.currentTimeMillis()
-            repository.insertInfection(
-                Infection(
-                    null,
-                    null,
-                    timestamp,
-                    "symptoms",
-                    true
-                )
-            )
-        }
-
-        question.value =
-            QuizState(0, 0, true)
+        cardTitle.set(questions[questionsAnswered].title)
+        cardBody.set(questions[questionsAnswered].body)
     }
 
     private fun setNotInfected() {
-        question.value  =
-            QuizState(0, 0, false)
+        cardTitle.set(R.string.symptoms_quiz_negative_title)
+        cardBody.set(R.string.symptoms_quiz_negative_body)
+        cardBackgroundColor.set(R.color.secondaryVariant)
+        cardTextColor.set(R.color.onSecondary)
+        setButtonsOnResult()
+    }
+
+    private fun setInfected() {
+        // Store details (DB and remotely)
+        // TODO
+
+        // Update view
+        cardTitle.set(R.string.symptoms_quiz_positive_title)
+        cardBody.set(R.string.symptoms_quiz_positive_body)
+        cardBackgroundColor.set(R.color.error)
+        cardTextColor.set(R.color.onError)
+        setButtonsOnResult()
+    }
+
+    private fun setButtonsOnResult() {
+        viewingResult = true;
+        noButtonVisibility.set(View.GONE)
+        yesButtonText.set(R.string.ok)
     }
 
 }
 
-data class QuizState(var questionTitle: Int, var questionBody: Int, var infectedResult: Boolean?)
+data class Question(val title: Int, val body: Int)
+

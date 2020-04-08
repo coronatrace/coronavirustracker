@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                app:cardBackgroundColor="@color/colorGray"
+                app:cardBackgroundColor="@color/lightGray"
                 >
 
                 <LinearLayout

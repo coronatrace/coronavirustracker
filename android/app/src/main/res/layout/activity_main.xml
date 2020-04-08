@@ -20,7 +20,7 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextColor="@color/colorOnPrimary"
+            app:titleTextColor="@color/onPrimary"
             app:title="@string/app_name">
 
         </com.google.android.material.appbar.MaterialToolbar>

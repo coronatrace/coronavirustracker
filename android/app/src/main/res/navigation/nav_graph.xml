@@ -18,7 +18,7 @@
         android:id="@+id/symptomsQuizFragment"
         android:name="com.coronatrace.covidtracker.symptomsquiz.SymptomsQuizFragment"
         android:label="fragment_symptoms_quiz"
-        tools:layout="@layout/fragment_symptoms_quiz" >
+        tools:layout="@layout/symptoms_quiz_frag" >
         <action
             android:id="@+id/action_symptomsQuizFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
