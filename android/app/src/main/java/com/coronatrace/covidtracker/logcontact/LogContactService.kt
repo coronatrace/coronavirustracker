@@ -19,6 +19,7 @@ import com.amplifyframework.api.graphql.MutationType;
 import com.amplifyframework.core.Amplify;
 import com.coronatrace.covidtracker.MainActivity
 import com.coronatrace.covidtracker.R
+import com.coronatrace.covidtracker.auth.Auth
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;
@@ -37,33 +38,28 @@ class LogContactService : Service() {
     private var message: Message? = null
     private var messageListener: MessageListener? = null
 
+    val userIdentityId: String
+        get() {
+            val id = Auth(this).userIdentityId
+            if (id != null) return id else return ""
+        }
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         startInForeground(intent)
-//        /**
-//         * Get phone UUID
-//         */
-//        val sharedPreferences = applicationContext.getSharedPreferences(
-//            "preferences",
-//            Context.MODE_PRIVATE
-//        )
-//        val trackingId = sharedPreferences.getString("trackingId", null)
-//
-//        /**
-//         * Initialise amplify and Auth
-//         */
-////        val auth = AnonymousAuth(this)
-////        val userId: String = auth.initialise()
-//        /**
-//         * Setup the message listener to log contact
-//         */
+
+        // Setup message listener
         messageListener = object : MessageListener() {
             override fun onFound(message: Message) {
                 // Get the contact details
                 val contactUserId = String(message.content)
                 val contactTimestamp = System.currentTimeMillis()
-                Log.d("Message listener", "Found user " + String(message.getContent()) + " with timestamp " + contactTimestamp.toString());
+                Log.d(
+                    "Message listener",
+                    "Found user $contactUserId with timestamp $contactTimestamp"
+                );
 
                 // Push to backend
+
 //                val contact: Contact = Contact.builder().userId(userId).contactUserId(contactUserId)
 //                    .contactTimestamp(contactTimestamp).build()
 //                Amplify.API.mutate(contact, MutationType.CREATE,
@@ -72,16 +68,16 @@ class LogContactService : Service() {
 //                )
             }
         }
-//
-//        // Setup the message (just the UUID)
-        message = Message("trackingIDhere".toByteArray())
-//
+
+        // Setup the message (just the UUID)
+        message = Message(userIdentityId.toByteArray())
+
         startLoggingScheduler()
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
-        stopLoggingScheduler()
+        stopLogging.run()
         super.onDestroy()
     }
 
@@ -116,7 +112,7 @@ class LogContactService : Service() {
 
         // Run for 15 seconds
         stopLog = scheduler.scheduleAtFixedRate(
-            stopLogging ,
+            stopLogging,
             (delay + 15000).toLong(),
             60000,
             TimeUnit.MILLISECONDS
@@ -129,14 +125,11 @@ class LogContactService : Service() {
     }
 
     private val startLogging = Runnable {
-        message?.let {
-            Log.d("Message", "publishing")
-            Nearby.getMessagesClient(this).publish(it) }
+        message?.let { Nearby.getMessagesClient(this).publish(it) }
         messageListener?.let { Nearby.getMessagesClient(this).subscribe(it) }
     }
 
     private val stopLogging = Runnable {
-        Log.d("Logger", "stopped $message $messageListener")
         message?.let { Nearby.getMessagesClient(this).unpublish(it) }
         messageListener?.let { Nearby.getMessagesClient(this).unsubscribe(it) }
     }
@@ -146,7 +139,6 @@ class LogContactService : Service() {
      */
 
     private fun startInForeground(intent: Intent) {
-        val input = intent.getStringExtra("inputExtra")
         createNotificationChannel()
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
