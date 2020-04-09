@@ -22,8 +22,16 @@
 					"defaultAuthentication": {
 						"authenticationType": "AWS_IAM"
 					}
-				}
-			}
+				},
+				"GraphQLAPIIdOutput": "a62ttgp63bct5i3frvncdbzu3q",
+				"GraphQLAPIEndpointOutput": "https://v5ugyn6fljdevn4vso6mx5dnea.appsync-api.eu-west-1.amazonaws.com/graphql"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-dummy-dummy-184040-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apidummy"
+			},
+			"lastPushTimeStamp": "2020-04-08T20:26:25.747Z",
+			"lastPushDirHash": "Taa4OWGb6U8Q5cbKHuoCEszO9es="
 		}
 	}
 }

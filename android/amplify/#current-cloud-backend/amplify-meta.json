@@ -1,15 +1,37 @@
 {
-    "providers": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-dummy-dummy-184040-authRole",
-            "UnauthRoleArn": "arn:aws:iam::306271828764:role/amplify-dummy-dummy-184040-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::306271828764:role/amplify-dummy-dummy-184040-authRole",
-            "Region": "eu-west-1",
-            "DeploymentBucketName": "amplify-dummy-dummy-184040-deployment",
-            "UnauthRoleName": "amplify-dummy-dummy-184040-unauthRole",
-            "StackName": "amplify-dummy-dummy-184040",
-            "StackId": "arn:aws:cloudformation:eu-west-1:306271828764:stack/amplify-dummy-dummy-184040/11ea9750-79c0-11ea-938e-0adcb29bafe2",
-            "AmplifyAppId": "d13ojrjfpkqul1"
-        }
-    }
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-dummy-dummy-184040-authRole",
+			"UnauthRoleArn": "arn:aws:iam::306271828764:role/amplify-dummy-dummy-184040-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::306271828764:role/amplify-dummy-dummy-184040-authRole",
+			"Region": "eu-west-1",
+			"DeploymentBucketName": "amplify-dummy-dummy-184040-deployment",
+			"UnauthRoleName": "amplify-dummy-dummy-184040-unauthRole",
+			"StackName": "amplify-dummy-dummy-184040",
+			"StackId": "arn:aws:cloudformation:eu-west-1:306271828764:stack/amplify-dummy-dummy-184040/11ea9750-79c0-11ea-938e-0adcb29bafe2",
+			"AmplifyAppId": "d13ojrjfpkqul1"
+		}
+	},
+	"api": {
+		"dummy": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "AWS_IAM"
+					}
+				},
+				"GraphQLAPIIdOutput": "a62ttgp63bct5i3frvncdbzu3q",
+				"GraphQLAPIEndpointOutput": "https://v5ugyn6fljdevn4vso6mx5dnea.appsync-api.eu-west-1.amazonaws.com/graphql"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-dummy-dummy-184040-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apidummy"
+			},
+			"lastPushTimeStamp": "2020-04-08T20:26:25.747Z",
+			"lastPushDirHash": "Taa4OWGb6U8Q5cbKHuoCEszO9es="
+		}
+	}
 }

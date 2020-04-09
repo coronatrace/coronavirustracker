@@ -1,16 +1,20 @@
 package com.coronatrace.covidtracker
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.amplifyframework.api.aws.AWSApiPlugin
+import com.amplifyframework.core.Amplify
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Configure AWS Amplify
+        Amplify.addPlugin(AWSApiPlugin())
+        Amplify.configure(applicationContext)
+
         setContentView(R.layout.activity_main)
     }
 

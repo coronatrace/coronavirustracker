@@ -20,9 +20,13 @@ import com.amplifyframework.core.Amplify;
 import com.coronatrace.covidtracker.MainActivity
 import com.coronatrace.covidtracker.R
 import com.coronatrace.covidtracker.auth.Auth
+import com.coronatrace.covidtracker.data.source.remote.AppAPI
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,14 +62,13 @@ class LogContactService : Service() {
                     "Found user $contactUserId with timestamp $contactTimestamp"
                 );
 
-                // Push to backend
+                // Add to API
+                val api = AppAPI(this@LogContactService )
 
-//                val contact: Contact = Contact.builder().userId(userId).contactUserId(contactUserId)
-//                    .contactTimestamp(contactTimestamp).build()
-//                Amplify.API.mutate(contact, MutationType.CREATE,
-//                    { taskCreationResponse -> },
-//                    { apiFailure -> } //Log.e("AmplifyGetStarted", "Failed to create a task.", apiFailure)
-//                )
+                val coroutineScope = CoroutineScope(Dispatchers.Main)
+                coroutineScope.launch {
+                    api.addContact(contactTimestamp, contactUserId)
+                }
             }
         }
 
